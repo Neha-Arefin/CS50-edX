@@ -1,0 +1,58 @@
+     
+/*	Neha Arefin
+ 	Implement a program that prints out a double half-pyramid of a specified height, per the below.
+ 
+ 						Height: 4
+					       	    #  #
+						   ##  ##
+						  ###  ###
+						 ####  ####
+ */
+
+　
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+	int n;
+	do{	//do while loop 
+		cout << "please enter a positive value less than 24 : ";
+		cin >> n;
+	} while (n < 0 || n > 25);		//to prompt user to input value if they input a value more than 25 and less than 0
+
+	
+
+		for (int i = 0; i < n; i++)	//will account for the height/rows depending on the value of n
+		{
+
+		for (int j = 0; j < n - 1 - i; j++)  // ( j < n-1-i) explaination ->  'n-1' because if you observe, we need 1 less space ' ' than the value followed by a '#' 
+		{		                     //	                          ->  '-i'  so that number of space ' ' decrese by 1 with each height/row iteration
+			cout << " ";		     // print number of spaces depending on the aurgument
+		}
+
+		for (int s = n - 1 - i; s < n; s++) // ( s = n -1-i) explanation  ->  'n-1' because in this loop s<n and s++ means only 1 '#' will be printed on 1st iteration
+		{		                    //	                          ->  '-i'  so number of '#' can be increased by 1 with each height/row iteration
+			cout << "#";		    // print number of '#' depending on the aurgument
+		}
+
+		cout << "  ";		            // print two space between the ladder
+
+		for (int s = n - 1 - i; s < n; s++) // Same as above argument for printing '#'
+		{
+			cout << "#";
+		}
+
+		cout << endl;
+
+		}
+	
+	return 0;
+}
+
+　
+/*
+alternative way: (with while loops)
+
+*/
