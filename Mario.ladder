@@ -53,11 +53,54 @@ int main()
 	return 0;
 }
 
-　
+/////////////////////////////////////////////////////////////////////////////////　
 /////////////////////////////////////////////////////////////////////////////
 //
 //the way i don't like:
 /*
 alternative way: (with while loops)
+#include <iostream>
+using namespace std;
 
+int main()
+{
+	int n;
+	cin >> n;			// n=4
+	int x = n - 1;		// x=3
+	int t = n - 1;		// t=3
+	int j = 0;
+	int l = n-1;		// l=3
+
+	for (int i = 0; i < n; i++) //so that it goes down the number of iteration
+	{
+
+		while (x > 0)	//for printing 1st spaces which will decrease 3>0	
+		{
+			cout<<(" "); 
+			x--;		// if 2>0 and 1>0 so, pritning 3 spaces on the first line. 
+		}
+		j++;				// j=1   increasing j by 1 so it can decrease the x in next loop
+		x = n-j-1;			// x= 2  updating x so next time it prints 2 spaces and later 1 space
+
+		while (t < n)		// * will increase  3<4 (true)
+		{
+			cout<<("*");	// *
+			t++;			// 4 is not less than 4 
+		}
+		t= t-1-j;			// updating t so it can be increased in next loop
+
+		cout << "   ";		// now _ _ _ * _ _
+		
+		while (l < n)		// 3<4 it will increase from 1 *
+		{
+			cout << "*";	// *
+			l++;			// 4 not less than 4
+		}
+		l = l - 1 - j;		//updating l so l++ can increase it more in next loop
+
+
+		cout << endl;
+	}
+	return 0;
+}
 */
