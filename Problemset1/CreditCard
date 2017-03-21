@@ -1,0 +1,173 @@
+#include <iostream>
+using namespace std;
+
+
+void check(long long, int, int&); //will conduct the calculations
+void inval();
+int main() {
+	
+	
+	int l = 0;          //( l is our sum after the execution of the function. So, we are initializing with 0)
+	int i = 1;
+	long long a;
+	cin >> a;           //inputting a few digits number
+	long long p = a; 
+	long long ans; 
+	do{
+		ans = a / 10;   // divide number by 10 
+		a = ans;
+		i++;            //add up each time its divided by 10. thats why initially i = 1
+	} while (ans > 10);	//this will count how long the number is. is it 15? 14? 12?
+
+
+	cout << "the number you inputed is "<< i << " digits long "<< endl;
+
+
+	if (i == 15)                                   // if the number is 15 digits long (as American Express has 15 digits)
+	{
+		long long digit = p / 10000000000000;      // see if the number starts with 34 or 37 to be valid for American Express 
+		                                           // long long will destroy anything after decimal. (Works in my advantage)
+		
+		if (digit == 34 || digit == 37)            // if it starts with 34 or 37
+		{
+			
+			check(p, i, l);                        // call the function to verify
+			
+			if (l == 0)                            //from the fuction : sum % 10 == 0 (as the sum must end with a 0 to be valid)  
+			{
+				cout << "it's a valid American Express card! :) " << endl;    //then execute command
+			}
+		}
+		else
+		{
+			inval();                              // if the number does not start with 34 or 37 then call inval function
+		}
+	}
+
+
+
+	if (i == 16)                                  // if the number is 16 digit long (as MasterCard and Visa has 16 digits)
+	{
+		long long dogit = p / 100000000000000;    // see if the number starts with Master Card numbers (51 / 52 / 53 / 54 / 55)
+
+		if (dogit == 51 || dogit == 52 || dogit == 53 || dogit == 54 || dogit == 55)
+		{
+
+			check(p, i, l);                        // call the function to verify
+			if (l == 0)                            //from the fuction : sum % 10 == 0
+			{
+				cout << "it's a valid Master Card! :O " << endl;            //then state what card it is
+			}
+		}
+
+
+		else if ((p / 1000000000000000) == 4)           // see if number starts with 4 for Visa card (count the 0's if you are confused)
+		{
+			check(p, i, l);                         // call the function to verify
+			if (l == 0)                             //from the fuction : if sum % 10 == 0
+			{
+				cout << "it's a Visa Card! :X " << endl;                  //then state what card it is
+			}
+		}
+	}
+
+
+	if (i == 13)                                  // if the number is 13 digit long (as Visa has 13 digits)
+	{
+		
+		if ((p / 1000000000000) == 4)             // if numbers digit starts with 4 
+		{
+			check(p, i,l);                        // call function to check if its a Visa Card
+			if (l == 0)                           //from the fuction : sum % 10 == 0 (must end with 0 to be valid)
+			{         
+				cout << "it's a valid Visa Card! :X " << endl;           //then state what card it is
+			}
+			else
+			{
+				inval();                          // if the number does not start with 4 then call inval function
+			}
+		}
+	}
+
+	else
+	{
+		inval();
+	}
+	return 0;
+}
+
+
+void check(long long p, int i, int &sum)
+{
+	int placeholderforodd = 0;    //for all the odd position
+	int placeholderforeven = 0;   //for all the even position
+	int j = 0;
+	if (i == 16)                  //when the card number is 16, unfortunately, odd and even will swap. as we will multiply positions 15, 13, 11.....  and add even positions regularly
+	{
+		j = 16;                   // for the above reason, we want j to stay constant.
+	}
+
+	for (i; i > 0; i--)           //loop depending on the number of digit
+	{
+		int multiplying = 0;
+		int z = 0;
+		int a = p % 10;           //get the last digit of the whole number
+	
+		
+
+
+		if (j == 16){                      // if i was 16
+			if ((i % 2) == 0)              // if it is an even i position
+			{
+				placeholderforeven = a + placeholderforeven;
+				                            // even = last digit + previous last even;
+			}
+			else if ((i % 2) == 1)          //if its an odd i
+			{
+				multiplying = a * 2;        // according to the rule 
+				if (multiplying > 9)        //if the multiplying is greater than 9 we have to seperate the two digits and add them
+				{
+					z = multiplying / 10;   // as z is an int, diving by 10 will give us the first digit. 
+				}
+				placeholderforodd = z + (multiplying % 10) + placeholderforodd;    //will add all last even digits
+				                                                                   // (1st digit + 2nd digit (by %10) + previous last odd digit)
+			}
+		}
+		
+			
+
+
+		else {                            // if i not equals to 16
+			if ((i % 2) == 1)             //if its an odd i position
+			{
+				placeholderforodd = a + placeholderforodd;    
+			}                             // adding up all the odd places (according to the rule)
+
+			else if ((i % 2) == 0)        //if its an even i
+			{         
+				multiplying = a * 2;      // according to the rule 
+				if (multiplying > 9)      //if the multiplication is greater than 10 we have to seperate the two digits and add them
+				{
+					z = multiplying / 10; // as z is an int, diving by 10 will give us the first digit. 
+				}
+				placeholderforeven = z + (multiplying % 10) + placeholderforeven;    //will add all last even digits, even when multiplication is more than 1
+		                                                                             // (1st digit (thanks to *2) + 2nd digit (by %10) + previous last even digit)
+			}
+		}
+
+			p = p - a;     //subtracting the last digit from whole number
+			p = p / 10;    //diving to decrese the size of the number to access the next digit
+	}
+
+		sum = placeholderforeven + placeholderforodd; //add two sums
+		cout << "the sum is " << sum << endl;
+
+		sum = sum % 10;    //modulo by 10 to see if the last digit is 0 (to be valid for any card)
+}
+
+void inval()
+{
+	cout << "invalid entry. Please read your card and execute again" << endl;    //invalid entry!
+	
+}
+
