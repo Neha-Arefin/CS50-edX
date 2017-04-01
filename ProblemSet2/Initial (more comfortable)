@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <cctype>				    	//Needed for "touppercase"
+#include <cctype>				    	     //Needed for "touppercase"
 using namespace std;
 
 int main()
@@ -8,50 +8,50 @@ int main()
 	cout << "please write your full name : ";
 
 	string str;
-	getline(cin, str);          //User input a string
+	getline(cin, str);      			      //User input a string
 
 	string theRestofTheString, firstPart;
-	int n= 10;						     	 //Random loop #. (note: Will change in the for loop)
+	int n= 10;				              //Random loop #. (note: Will change in the for loop)
 
-	string poly = str;					 //Cpoied : to manipulate if the first character is not a space
+	string poly = str;				      //Cpoied : to manipulate if the first character is not a space
 	
-	if (poly[0] != ' ')					 //Checking if the 1st character is space or not
+	if (poly[0] != ' ')				      //Checking if the 1st character is space or not
 		{ 
-			poly.erase(1, poly.length());    // If it's not a space, delete all the other characters except the 1st one
+			poly.erase(1, poly.length());        // If it's not a space, delete all the other characters except the 1st one
 
 			int	ascii = toupper(poly[0]);    // uppercase it. It gave me an ASCII value
-			cout << char(ascii);             // So I just converted it into a char  >.>
+			cout << char(ascii);                 // So I just converted it into a char  >.>
 		}
 
-	int length = str.length() - 1;		  //the length of the string (Note: to use it as a string position, it is counted 1 less)
-	if (str[length] == ' ')             //Check if the last position is a space (to eliminate)
+	int length = str.length() - 1;		    //the length of the string (Note: to use it as a string position, it is counted 1 less)
+	if (str[length] == ' ')                     //Check if the last position is a space (to eliminate)
 		{
 			do
 			{
 				str = str.erase(length, 1);    //Erase the space
-				length--;					             //New length
+				length--;		       //New length
 			}	while (str[length] == ' ');    //As long as the ending is a space, subtract it
 		}
 
 
-	for (int i = 0; i < n; i++)          //This loop will eradicate any spaces in between. (Hint : keep an eye on n, the value on n changed in the code depending on the numer of spaces)
+	for (int i = 0; i < n; i++)                //This loop will eradicate any spaces in between. (Hint : keep an eye on n, the value on n changed in the code depending on the numer of spaces)
 		{
 			do													  	 //Do while loop (Erase any space found right off the bat)
 			{                                            
-				firstPart = str.erase(0, str.find(' ') + 1);         //Erase all characters uptil the found space (the first space...)
-			}   while (firstPart[0] == (' '));						         //if the first spot is a space, go back to erase it again
+				firstPart = str.erase(0, str.find(' ') + 1);    //Erase all characters uptil the found space (the first space...)
+			}   while (firstPart[0] == (' '));	                //if the first spot is a space, go back to erase it again
 																	                           //(Simply put:if more than 1 space is pressed, go back and erase it)
 
-		string checkforout = firstPart.substr(1, firstPart.length());  //The remaining of the string copied (to look for spaces at the end)
-		if (checkforout.find(' ') > 400000)				                     //If there is no space left, .find(' ') outputs a number 400000<
+		string checkforout = firstPart.substr(1, firstPart.length());   //The remaining of the string copied (to look for spaces at the end)
+		if (checkforout.find(' ') > 400000)				//If there is no space left, .find(' ') outputs a number 400000<
 			{
-				n = 0;                       //then we can end the for loop (n updated)
+				n = 0;             //then we can end the for loop (n updated)
 			}
 
-		theRestofTheString = firstPart.erase(1, firstPart.length());       //Erasing to 1 letter
+		theRestofTheString = firstPart.erase(1, firstPart.length());    //Erasing to 1 letter
 		
-		int	ascii = toupper(theRestofTheString[0]);                        //Uppercase the letters
-		cout <<	char(ascii);								                           	   //Converted ASCII it into Char
+		int	ascii = toupper(theRestofTheString[0]);                 //Uppercase the letters
+		cout <<	char(ascii);				                //Converted ASCII it into Char
 		}
 	cout << endl;
 	return 0;
